@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <button id="addMemberButton" class="btn btn-primary pull-right" (click)="goToAddMemberForm()">Add Member</button>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Member ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Job Title</th>
+        <th>Racing Team</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let member of members'>
+        <td>{{member?.id}}</td>
+        <td>
+          <span contenteditable="true"
+            (blur)="editMemberByID(member.id, 'firstName', $event)">{{member?.firstName}}</span>
+        </td>
+        <td>
+          <span contenteditable="true"
+            (blur)="editMemberByID(member.id, 'lastName', $event)">{{member?.lastName}}</span>
+        </td>
+        <td>
+          <span contenteditable="true"
+            (blur)="editMemberByID(member.id, 'jobTitle', $event)">{{member?.jobTitle}}</span>
+        </td>
+        <td>
+          <select name="selectedTeams" class="form-control" (change)="editMemberByID(member.id, 'team', $event)">
+            <option *ngFor="let t of teams" [selected]="member.team === t.teamName">{{t.teamName}}</option>
+          </select>
+        </td>
+        <td>
+          <select name="selectedStatus" class="form-control" (change)="editMemberByID(member.id, 'status', $event)"
+            [value]='member.status' [(ngModel)]="member.status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-primary pull-right" style="margin-right: 10px;" (click)="deleteMemberById(member.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
